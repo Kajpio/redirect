@@ -6,8 +6,10 @@
         // Function to fetch the redirect URL from the text file
         async function fetchRedirectURL() {
             try {
-                // Fetch the text file from the provided URL
-                const response = await fetch('https://raw.githubusercontent.com/Kajpio/redirect/main/redirect.txt');
+                // Fetch the text file from the provided URL with no-cache policy
+                const response = await fetch('https://raw.githubusercontent.com/Kajpio/redirect/main/redirect.txt', {
+                    cache: 'no-store' // No-cache policy
+                });
                 if (response.ok) {
                     const url = await response.text();
                     window.location.href = url.trim(); // Redirect to the URL
