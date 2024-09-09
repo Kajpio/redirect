@@ -8,7 +8,7 @@
         try {
           // Create a unique URL by appending a timestamp to the URL as a query parameter
           const urlWithCacheBusting =
-            "https://raw.githubusercontent.com/Kajpio/redirect/main/redirect.txt?timestamp=" + new Date().getTime();
+            "https://kajpio.github.io/redirect/redirect.txt?timestamp=" + new Date().getTime();
 
           // Fetch the text file from the provided URL with no-cache policy
           const response = await fetch(urlWithCacheBusting, {
