@@ -1,10 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="refresh" content="0; url=https://your-current-komoot-link.com">
     <title>Redirecting...</title>
+    <script>
+        // Function to fetch the redirect URL from the text file
+        async function fetchRedirectURL() {
+            try {
+                const response = await fetch('redirect.txt');
+                if (response.ok) {
+                    const url = await response.text();
+                    window.location.href = url.trim(); // Redirect to the URL
+                } else {
+                    console.error('Failed to fetch redirect URL.');
+                }
+            } catch (error) {
+                console.error('Error fetching redirect URL:', error);
+            }
+        }
+
+        // Call the function to fetch and redirect
+        fetchRedirectURL();
+    </script>
 </head>
 <body>
-    <p>If you are not redirected automatically, follow this <a href="https://your-current-komoot-link.com">link to the live tracking</a>.</p>
+    <p>If you are not redirected automatically, follow this <a id="redirectLink" href="#">link to the live tracking</a>.</p>
 </body>
 </html>
