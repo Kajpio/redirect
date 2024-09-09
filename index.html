@@ -12,6 +12,7 @@
                 });
                 if (response.ok) {
                     const url = await response.text();
+                    console.log("We will be redirecting to: ", url.trim()); 
                     window.location.href = url.trim(); // Redirect to the URL
                 } else {
                     console.error('Failed to fetch redirect URL.');
