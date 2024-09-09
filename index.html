@@ -1,36 +1,63 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Redirecting...</title>
     <script>
-        // Function to fetch the redirect URL from the text file with cache busting
-        async function fetchRedirectURL() {
-            try {
-                // Create a unique URL by appending a timestamp to the URL as a query parameter
-                const urlWithCacheBusting = 'https://raw.githubusercontent.com/Kajpio/redirect/main/redirect.txt?timestamp=' + new Date().getTime();
-                
-                // Fetch the text file from the provided URL with no-cache policy
-                const response = await fetch(urlWithCacheBusting, {
-                    cache: 'no-store' // No-cache policy
-                });
-                
-                if (response.ok) {
-                    const url = await response.text();
-                    console.log("We will be redirecting to: ", url.trim()); 
-                    window.location.href = url.trim(); // Redirect to the URL
-                } else {
-                    console.error('Failed to fetch redirect URL.');
-                }
-            } catch (error) {
-                console.error('Error fetching redirect URL:', error);
-            }
-        }
+      // Function to fetch the redirect URL from the text file with cache busting
+      async function fetchRedirectURL() {
+        try {
+          // Create a unique URL by appending a timestamp to the URL as a query parameter
+          const urlWithCacheBusting =
+            "https://raw.githubusercontent.com/Kajpio/redirect/main/redirect.txt?timestamp=" + new Date().getTime();
 
-        // Call the function to fetch and redirect
-        fetchRedirectURL();
+          // Fetch the text file from the provided URL with no-cache policy
+          const response = await fetch(urlWithCacheBusting, {
+            cache: "no-store", // No-cache policy
+          });
+
+          if (response.ok) {
+            const url = await response.text();
+            console.log("We will be redirecting to:", url.trim());
+            displayRedirectURL(url.trim()); // Display the redirect URL
+          } else {
+            console.error("Failed to fetch redirect URL.");
+          }
+        } catch (error) {
+          console.error("Error fetching redirect URL:", error);
+        }
+      }
+
+      // Function to display the redirect URL with a countdown before redirecting
+      function displayRedirectURL(url) {
+        const redirectLink = document.getElementById("redirectLink");
+        const countdownElement = document.getElementById("countdown");
+        let countdown = 5; // Set the countdown duration in seconds
+
+        redirectLink.textContent = url; // Display the redirect URL
+
+        // Start the countdown
+        const countdownInterval = setInterval(() => {
+          countdownElement.textContent = countdown;
+          countdown--;
+
+          if (countdown < 0) {
+            clearInterval(countdownInterval);
+            window.location.href = url; // Redirect to the URL
+          }
+        }, 10000);
+      }
+
+      // Call the function to fetch and redirect
+      fetchRedirectURL();
     </script>
-</head>
-<body>
-    <p>If you are not redirected automatically, follow this <a id="redirectLink" href="https://raw.githubusercontent.com/Kajpio/redirect/main/redirect.txt">link to the live tracking</a>.</p>
-</body>
+  </head>
+  <body>
+    <p>
+      If you are not redirected automatically, follow this
+      <a id="redirectLink" href="https://raw.githubusercontent.com/Kajpio/redirect/main/redirect.txt"
+        >link to the live tracking</a
+      >.
+    </p>
+    <p>Redirecting in <span id="countdown">5</span> seconds...</p>
+  </body>
 </html>
