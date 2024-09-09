@@ -3,13 +3,17 @@
 <head>
     <title>Redirecting...</title>
     <script>
-        // Function to fetch the redirect URL from the text file
+        // Function to fetch the redirect URL from the text file with cache busting
         async function fetchRedirectURL() {
             try {
+                // Create a unique URL by appending a timestamp to the URL as a query parameter
+                const urlWithCacheBusting = 'https://raw.githubusercontent.com/Kajpio/redirect/main/redirect.txt?timestamp=' + new Date().getTime();
+                
                 // Fetch the text file from the provided URL with no-cache policy
-                const response = await fetch('https://raw.githubusercontent.com/Kajpio/redirect/main/redirect.txt', {
+                const response = await fetch(urlWithCacheBusting, {
                     cache: 'no-store' // No-cache policy
                 });
+                
                 if (response.ok) {
                     const url = await response.text();
                     console.log("We will be redirecting to: ", url.trim()); 
